@@ -28,14 +28,18 @@ async def find_plato(id: str):
 
 @plato.put('/platos/{id}', response_model=Plato, tags=["users"])
 def edit_plato(id: str, plato: Plato):
-    conn.hugomoreno.platos.find_one_and_update({"_id": ObjectId(id)}, {"$set": dict(plato)})
-    return platoEntity(conn.hugomoreno.platos.find_one({"_id": ObjectId(id)}))
+    plato = conn.hugomoreno.platos.find_one({"_id": ObjectId(id)})
+    if plato:
+        conn.hugomoreno.platos.find_one_and_update({"_id": ObjectId(id)}, {"$set": dict(plato)})
+        return platoEntity(plato)
+    else:
+        return {"error": "Plato no encontrado"}
 
 @plato.delete('/platos/{id}', response_model=Plato, tags=["users"])
 def delete_plato(id: str):
     plato = conn.hugomoreno.platos.find_one({"_id": ObjectId(id)})
-    platoEntity(conn.hugomoreno.platos.find_one_and_delete({"_id": ObjectId(id)}))
     if plato:
+        platoEntity(conn.hugomoreno.platos.find_one_and_delete({"_id": ObjectId(id)}))
         return platoEntity(plato)
     else:
         return {"error": "Plato no encontrado"}
