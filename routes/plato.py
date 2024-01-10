@@ -40,6 +40,6 @@ def delete_plato(id: str):
     plato = conn.hugomoreno.platos.find_one({"_id": ObjectId(id)})
     if plato:
         platoEntity(conn.hugomoreno.platos.find_one_and_delete({"_id": ObjectId(id)}))
-        return platoEntity(plato)
+        return platoEntity(conn.hugomoreno.platos.find_one({"_id": ObjectId(id)}))
     else:
         return {"error": "Plato no encontrado"}
