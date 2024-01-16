@@ -6,8 +6,6 @@ import os
 load_dotenv(find_dotenv())
 usuario = os.environ.get("USUARIO")
 password = os.environ.get("PASSWORD")
-host = os.environ.get("HOST")
-bd = os.environ.get("BD")
 
 uri = f"mongodb+srv://{usuario}:{password}@cluster0.76rx93h.mongodb.net/"
 
